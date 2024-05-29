@@ -135,7 +135,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Matrix.h" />
-    <ClInclude Include="Simplex.h" />
+    <ClInclude Include="ParallelSimplex.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

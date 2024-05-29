@@ -31,8 +31,8 @@
     <ClInclude Include="Matrix.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Simplex.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="ParallelSimplex.cpp">
+      <Filter>源文件</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -23,12 +23,15 @@
     <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="MatrixException.h">
+      <Filter>头文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Matrix.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="MatrixException.h">
+    <ClInclude Include="Simplex.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

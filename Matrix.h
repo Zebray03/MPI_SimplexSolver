@@ -1,10 +1,16 @@
 #pragma once
+#include <iostream>
 #include "MatrixException.h"
 class Matrix
 {
 public:
-	Matrix() = delete;
-	Matrix(const int m_row, const int m_column)
+	Matrix()
+	{
+		row = 0;
+		column = 0;
+		data = nullptr;
+	}
+	Matrix(int m_row, int m_column)
 	{
 		row = m_row;
 		column = m_column;
@@ -14,14 +20,43 @@ public:
 			data[i] = new double[column]();
 		}
 	}
+	Matrix(double** data, int m_row, int m_column)
+	{
+		row = m_row;
+		column = m_column;
+		this->data = new double* [row];
+		for (int i = 0; i < row; i++)
+		{
+			this->data[i] = new double[column]();
+			for (int j = 0; j < column; j++)
+			{
+				this->data[i][j] = data[i][j];
+			}
+		}
+	}
 	~Matrix()
 	{
 		delete[] data;
 	}
+
 	int* get_size()
 	{
 		int size[] = { this->row,this->column };
 		return size;
+	}
+
+	/**
+	* @brief		Override the operator =
+	*/
+	void operator=(Matrix& para)
+	{
+		for (int i = 0; i < this->row; i++)
+		{
+			for (int j = 0; j < this->column; j++)
+			{
+				this->data[i][j] = para[i][j];
+			}
+		}
 	}
 
 	/**
@@ -88,7 +123,7 @@ public:
 	}
 
 	/**
-	* @brief				Add row i to row j (column) k times:
+	* @brief				Add row i to row j (column) k times
 	* @param augend_index	The index of the augend row
 	* @param addend_index   The index of the addend row
 	* @param k				The multiplier
@@ -102,6 +137,55 @@ public:
 			this->data[augend_index][i] += (k * this->data[addend_index][i]);
 		}
 		return *this;
+	}
+
+	/**
+	* @brief				Unitize row i
+	* @param row_index		The index of the unitized row
+	* @param column_index   The index of the unitizator in the row
+	*
+	* @return				this
+	*/
+	Matrix& row_unitization(int row_index, int column_index)
+	{
+		double divisor = 1 / data[row_index][column_index];
+		this->primary_row_transform_2(row_index, divisor);
+	}
+
+	/**
+	* @brief				Eliminate column j using row i (here Matrix[i,j] = 1)
+	* @param row_index		The index of the eliminator row
+	* @param column_index   The index of the eliminator in the row
+	*
+	* @return				this
+	*/
+	Matrix& column_elimination(int row_index, int column_index)
+	{
+		for (int i = 0; i < this->row; i++)
+		{
+			if (i == row_index)
+			{
+				continue;
+			}
+			else
+			{
+				this->primary_row_transform_3(i,row_index,data[i][column_index]);
+			}
+		}
+	}
+
+	/**
+	* @brief	Print the matrix
+	*/
+	void print()
+	{
+		for (int i = 0; i < row; i++)
+		{
+			for (int j = 0; j < column; j++)
+			{
+				std::cout << data[i][j] << (j != column - 1 ? ' ' : '\n') << std::endl;
+			}
+		}
 	}
 
 private:
@@ -132,16 +216,3 @@ private:
 		}
 	}
 };
-
-/**
-* @brief				Combine the piecewise matrices
-* @param matrix_group	The group of piecewise matrices
-*
-* @return				The combination of the group
-* @todo
-*/
-Matrix combine(Matrix** matrix_group)
-{
-	
-}
-

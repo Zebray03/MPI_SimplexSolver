@@ -141,7 +141,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Matrix.h" />
-    <ClInclude Include="ParallelSimplex.cpp" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="Simplex.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="test\test1\1_A.txt" />
+    <Text Include="test\test1\1_b.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

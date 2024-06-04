@@ -31,8 +31,19 @@
     <ClInclude Include="Matrix.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="ParallelSimplex.cpp">
+    <ClInclude Include="Simplex.cpp">
       <Filter>源文件</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="test\test1\1_A.txt">
+      <Filter>资源文件</Filter>
+    </Text>
+    <Text Include="test\test1\1_b.txt">
+      <Filter>资源文件</Filter>
+    </Text>
   </ItemGroup>
 </Project>

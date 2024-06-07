@@ -1,9 +1,8 @@
-
 #include "Matrix.h"
 #include "Simplex.cpp"
 
 int main(int argc, char* argv[]) {
-	/*double** data = new double*[2];
+	double** data = new double*[2];
 	for (int i = 0; i < 2; i++) {
 		data[i] = new double[2];
 		for (int j = 0; j < 2; j++)
@@ -12,6 +11,6 @@ int main(int argc, char* argv[]) {
 		}
 	}
 	Matrix A(data, 2, 2);
-	A.print();*/
+	A.print();
 	return 0;
 }

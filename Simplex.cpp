@@ -5,20 +5,41 @@
 class Simplex
 {
 public:
-	Simplex(Matrix& A, Matrix& b)
+	Simplex(Matrix& A, Matrix& b, Matrix& c)
 	{
 		int* A_size = A.get_size();
 		int* b_size = b.get_size();
-		if (A_size[0] != b_size[0] || b_size[1] != 1)
+		int* c_size = c.get_size();
+		if (A_size[0] != b_size[0] || b_size[1] != 1 || A_size[1] != c_size[0])
 		{
 			// Exception
 		}
 		else
 		{
-			int m_row = A_size[0];
-			int m_column = A_size[1] + 1;
-			Matrix temp = Matrix(m_row, m_column);
-			tabular = temp;
+			int base_num = A_size[0];
+			int var_num = A_size[1];
+
+			double** tab_data = new double* [base_num];
+			for (int i = 0; i < base_num; i++)
+			{
+				tab_data[i] = new double[var_num + 1];
+				for (int j = 0; j < var_num; j++)
+				{
+					tab_data[i][j] = A[i][j];
+				}
+				tab_data[i][var_num] = b[i][0];
+			}
+			Matrix temp1 = Matrix(base_num, var_num);
+			tabular = temp1;
+
+			double** cost_data = new double* [var_num];
+			for (int j = 0; j < var_num; j++)
+			{
+				cost_data[j] = new double;
+				cost_data[j][0] = c[j][0];
+			}
+			Matrix temp2 = Matrix(cost_data, var_num, 1);
+			cost = temp2;
 		}
 	}
 
@@ -41,6 +62,7 @@ public:
 		// Allocate the reduced costs
 		double* reduced_cost = new double[var_num];
 		bool not_completed = true;
+		bool is_bounded;
 		
 		// Execute the loop of solving
 		do
@@ -65,28 +87,72 @@ public:
 			// Calculate the reduced costs
 			for (int j = 0; j < var_num; j++)
 			{
-
+				double sum = 0;
+				for (int i = 0; i < base_num; i++)
+				{
+					sum += cost[bases_index[i]][0] * tabular[i][j];
+				}
+				reduced_cost[j] = cost[j][0] - sum;
 			}
 
 			// Get the index of base_in variable
 			int in_index = -1;
+			int out_index = -1;
 			double standard = 0;
 			for (int j = 0; j < var_num; j++)
 			{
-
+				if (reduced_cost[j] < standard)
+				{
+					standard = reduced_cost[j];
+					in_index = j;
+				}
 			}
-
-			// Get the index of base_out variable
-			int out_index = -1;
-			for (int i = 0; i < base_num; i++)
-			{
-
-			}
-
 			// Resolve the condition and renew the flag
-
-
+			if (in_index == -1)
+			{
+				not_completed = false;
+				is_bounded = true;
+			}
+			else
+			{
+				// Get the index of base_out variable
+				standard = LLONG_MAX;
+				for (int i = 0; i < base_num; i++)
+				{
+					if (tabular[i][in_index] > 0 && tabular[i][var_num] / tabular[i][in_index] < standard)
+					{
+						standard = tabular[i][var_num] / tabular[i][in_index];
+						out_index = bases_index[i];
+					}
+				}
+				// Resolve the condition and renew the flag
+				if (out_index == -1)
+				{
+					not_completed = false;
+					is_bounded = false;
+				}
+			}
 		} while (not_completed);
+
+		// Build up the solution
+		if (is_bounded)
+		{
+			double** solution_data = new double* [var_num];
+			for (int i = 0; i < var_num; i++)
+			{
+				solution_data[i] = new double[1];
+				solution_data[i][0] = 0;
+			}
+			for (int j = 0; j < base_num; j++)
+			{
+				solution_data[bases_index[j]][0] = tabular[j][var_num];
+			}
+			return Matrix(solution_data, var_num, 1);
+		}
+		else
+		{
+			return Matrix();
+		}
 	}
 
 	/**
@@ -98,4 +164,5 @@ public:
 	}
 private:
 	Matrix tabular;
+	Matrix cost;
 };

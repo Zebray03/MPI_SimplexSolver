@@ -1,29 +1,22 @@
 #pragma once
 #include <iostream>
 #include "MatrixException.h"
+
 class Matrix
 {
 public:
-	Matrix()
+	Matrix() :row(0), column(0), data(nullptr) {}
+
+	Matrix(int m_row, int m_column) :row(m_row), column(m_column)
 	{
-		row = 0;
-		column = 0;
-		data = nullptr;
-	}
-	Matrix(int m_row, int m_column)
-	{
-		row = m_row;
-		column = m_column;
 		data = new double* [row];
 		for (int i = 0; i < row; i++)
 		{
 			data[i] = new double[column]();
 		}
 	}
-	Matrix(double** data, int m_row, int m_column)
+	Matrix(double** data, int m_row, int m_column) :row(m_row), column(m_column)
 	{
-		row = m_row;
-		column = m_column;
 		this->data = new double* [row];
 		for (int i = 0; i < row; i++)
 		{
@@ -34,6 +27,7 @@ public:
 			}
 		}
 	}
+
 	~Matrix()
 	{
 		delete[] data;
@@ -48,7 +42,7 @@ public:
 	/**
 	* @brief		Override the operator =
 	*/
-	void operator=(Matrix& para)
+	Matrix& operator=(Matrix& para)
 	{
 		for (int i = 0; i < this->row; i++)
 		{

@@ -1,5 +1,6 @@
 #pragma once
 #include "Vector.h"
+#include "IOHelper.h"
 
 class Simplex
 {
@@ -17,7 +18,6 @@ public:
 		{
 			int base_num = A_size[0];
 			int var_num = A_size[1];
-
 			double** tab_data = new double* [base_num];
 			for (int i = 0; i < base_num; i++)
 			{
@@ -28,20 +28,18 @@ public:
 				}
 				tab_data[i][var_num] = b[i];
 			}
-			Matrix temp1 = Matrix(base_num, var_num);
-			tabular = temp1;
+			this->tabular = new Matrix(tab_data, base_num, var_num + 1);
 
 			double* cost_data = new double[var_num];
 			for (int j = 0; j < var_num; j++)
 			{
 				cost_data[j] = c[j];
 			}
-			Vector temp2 = Vector(cost_data, var_num);
-			cost = temp2;
+			this->cost = new Vector(cost_data, var_num);
 		}
 	}
 
-	~Simplex(){}
+	~Simplex() {}
 
 	/**
 	* @brief	Solve the simplex
@@ -49,13 +47,24 @@ public:
 	Vector solve()
 	{
 		// Get the number of the bases and variables
-		int base_num = this->tabular.get_size()[0];
-		int var_num = this->tabular.get_size()[1] - 1;
+		int base_num = this->tabular->get_size()[0];
+		int var_num = this->tabular->get_size()[1] - 1;
 
 		// Initial the indexes of the bases
 		int* bases_index = new int[base_num];
 		for (int i = 0; i < base_num; i++)
 		{
+			// may have problems
+			if ((*tabular)[i][i] == 0)
+			{
+				for (int j = 0; j < base_num; j++)
+				{
+					if ((*tabular)[j][i] != 0)
+					{
+						tabular->primary_row_transform_3(i, j, 1);
+					}
+				}
+			}
 			bases_index[i] = i;
 		}
 
@@ -63,14 +72,14 @@ public:
 		double* reduced_cost = new double[var_num];
 		bool not_completed = true;
 		bool is_bounded;
-		
+
 		// Execute the loop of solving
 		do
 		{
 			// Renew the tabular
 			for (int i = 0; i < base_num; i++)
 			{
-				tabular.row_unitization(i, bases_index[i]);
+				tabular->row_unitization(i, bases_index[i]);
 				for (int j = 0; j < base_num; j++)
 				{
 					if (i == j)
@@ -79,7 +88,7 @@ public:
 					}
 					else
 					{
-						tabular.column_elimination(i, bases_index[i]);
+						tabular->column_elimination(i, bases_index[i]);
 					}
 				}
 			}
@@ -90,9 +99,9 @@ public:
 				double sum = 0;
 				for (int i = 0; i < base_num; i++)
 				{
-					sum += cost[bases_index[i]] * tabular[i][j];
+					sum += (*cost)[bases_index[i]] * (*tabular)[i][j];
 				}
-				reduced_cost[j] = cost[j] - sum;
+				reduced_cost[j] = (*cost)[j] - sum;
 			}
 
 			// Get the index of base_in variable
@@ -107,6 +116,7 @@ public:
 					in_index = j;
 				}
 			}
+
 			// Resolve the condition and renew the flag
 			if (in_index == -1)
 			{
@@ -119,9 +129,9 @@ public:
 				standard = DBL_MAX;
 				for (int i = 0; i < base_num; i++)
 				{
-					if (tabular[i][in_index] > 0 && tabular[i][var_num] / tabular[i][in_index] < standard)
+					if ((*tabular)[i][in_index] > 0 && (*tabular)[i][var_num] / (*tabular)[i][in_index] < standard)
 					{
-						standard = tabular[i][var_num] / tabular[i][in_index];
+						standard = (*tabular)[i][var_num] / (*tabular)[i][in_index];
 						out_index = bases_index[i];
 					}
 				}
@@ -130,6 +140,17 @@ public:
 				{
 					not_completed = false;
 					is_bounded = false;
+				}
+				else
+				{
+					for (int index = 0; index < base_num; index++)
+					{
+						if (bases_index[index] == out_index)
+						{
+							bases_index[index] = in_index;
+							break;
+						}
+					}
 				}
 			}
 		} while (not_completed);
@@ -144,7 +165,7 @@ public:
 			}
 			for (int j = 0; j < base_num; j++)
 			{
-				solution_data[bases_index[j]] = tabular[j][var_num];
+				solution_data[bases_index[j]] = (*tabular)[j][var_num];
 			}
 			return Vector(solution_data, var_num);
 		}
@@ -154,7 +175,12 @@ public:
 		}
 	}
 
+	Matrix* get_tabular()
+	{
+		return tabular;
+	}
+
 private:
-	Matrix tabular;
-	Vector cost;
+	Matrix* tabular;
+	Vector* cost;
 };

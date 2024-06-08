@@ -154,13 +154,6 @@ public:
 		}
 	}
 
-	/**
-	* @brief	Solve the simplex using the MPI interface
-	*/
-	Matrix MPI_solve()
-	{
-
-	}
 private:
 	Matrix tabular;
 	Vector cost;

@@ -139,6 +139,7 @@
     <ClCompile Include="IOHelper.h" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MatrixException.h" />
+    <ClCompile Include="MPI_Simplex.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Matrix.h" />

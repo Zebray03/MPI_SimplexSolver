@@ -1,6 +1,5 @@
 #pragma once
 #include "Vector.h"
-#include <mpi.h>
 
 class Simplex
 {
@@ -41,6 +40,8 @@ public:
 			cost = temp2;
 		}
 	}
+
+	~Simplex(){}
 
 	/**
 	* @brief	Solve the simplex

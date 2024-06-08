@@ -45,17 +45,6 @@ public:
 		return this->get_data()[index];
 	}
 
-	/**
-	* @brief		Transpose the vector
-	*
-	* @return		Vector
-	*/
-	Vector trans()
-	{
-		Matrix temp = this->trans();
-		return matrix_as_vector(temp);
-	}
-
 private:
 	int row;
 	int column;
@@ -73,14 +62,3 @@ private:
 		return this->data;
 	}
 };
-
-Vector matrix_as_vector(Matrix& para)
-{
-	int row = para.get_size()[0];
-	double* data = new double[row];
-	for (int i = 0; i < row; i++)
-	{
-		data[i] = para[i][0];
-	}
-	return Vector(data, row);
-}

@@ -57,7 +57,8 @@ public:
 		{
 			for (int j = 0; j < column; j++)
 			{
-				std::cout << matrix[i][j] << (j != column - 1 ? ' ' : '\n') << std::endl;
+				std::cout << matrix[i][j];
+				//std::cout << matrix[i][j] << (j != column - 1 ? ' ' : '\n');
 			}
 		}
 	}

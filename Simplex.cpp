@@ -116,7 +116,7 @@ public:
 			else
 			{
 				// Get the index of base_out variable
-				standard = LLONG_MAX;
+				standard = DBL_MAX;
 				for (int i = 0; i < base_num; i++)
 				{
 					if (tabular[i][in_index] > 0 && tabular[i][var_num] / tabular[i][in_index] < standard)

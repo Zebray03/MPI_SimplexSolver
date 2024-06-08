@@ -136,6 +136,7 @@
     <None Include="..\Visual Studio 2022.lnk" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="IOHelper.h" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MatrixException.h" />
   </ItemGroup>
@@ -143,6 +144,7 @@
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Simplex.cpp" />
+    <ClInclude Include="Vector.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="test\test1\1_A.txt" />

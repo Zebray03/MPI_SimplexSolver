@@ -1,16 +1,16 @@
 #pragma once
-#include "Matrix.h"
+#include "Vector.h"
 #include <mpi.h>
 
 class Simplex
 {
 public:
-	Simplex(Matrix& A, Matrix& b, Matrix& c)
+	Simplex(Matrix& A, Vector& b, Vector& c)
 	{
 		int* A_size = A.get_size();
-		int* b_size = b.get_size();
-		int* c_size = c.get_size();
-		if (A_size[0] != b_size[0] || b_size[1] != 1 || A_size[1] != c_size[0])
+		int b_size = b.get_size();
+		int c_size = c.get_size();
+		if (A_size[0] != b_size || A_size[1] != c_size)
 		{
 			// Exception
 		}
@@ -27,18 +27,17 @@ public:
 				{
 					tab_data[i][j] = A[i][j];
 				}
-				tab_data[i][var_num] = b[i][0];
+				tab_data[i][var_num] = b[i];
 			}
 			Matrix temp1 = Matrix(base_num, var_num);
 			tabular = temp1;
 
-			double** cost_data = new double* [var_num];
+			double* cost_data = new double[var_num];
 			for (int j = 0; j < var_num; j++)
 			{
-				cost_data[j] = new double;
-				cost_data[j][0] = c[j][0];
+				cost_data[j] = c[j];
 			}
-			Matrix temp2 = Matrix(cost_data, var_num, 1);
+			Vector temp2 = Vector(cost_data, var_num);
 			cost = temp2;
 		}
 	}
@@ -46,7 +45,7 @@ public:
 	/**
 	* @brief	Solve the simplex
 	*/
-	Matrix solve()
+	Vector solve()
 	{
 		// Get the number of the bases and variables
 		int base_num = this->tabular.get_size()[0];
@@ -90,9 +89,9 @@ public:
 				double sum = 0;
 				for (int i = 0; i < base_num; i++)
 				{
-					sum += cost[bases_index[i]][0] * tabular[i][j];
+					sum += cost[bases_index[i]] * tabular[i][j];
 				}
-				reduced_cost[j] = cost[j][0] - sum;
+				reduced_cost[j] = cost[j] - sum;
 			}
 
 			// Get the index of base_in variable
@@ -137,21 +136,20 @@ public:
 		// Build up the solution
 		if (is_bounded)
 		{
-			double** solution_data = new double* [var_num];
+			double* solution_data = new double[var_num];
 			for (int i = 0; i < var_num; i++)
 			{
-				solution_data[i] = new double[1];
-				solution_data[i][0] = 0;
+				solution_data[i] = 0;
 			}
 			for (int j = 0; j < base_num; j++)
 			{
-				solution_data[bases_index[j]][0] = tabular[j][var_num];
+				solution_data[bases_index[j]] = tabular[j][var_num];
 			}
-			return Matrix(solution_data, var_num, 1);
+			return Vector(solution_data, var_num);
 		}
 		else
 		{
-			return Matrix();
+			return Vector();
 		}
 	}
 
@@ -164,5 +162,5 @@ public:
 	}
 private:
 	Matrix tabular;
-	Matrix cost;
+	Vector cost;
 };

@@ -1,7 +1,9 @@
 #include "Matrix.h"
 #include "Simplex.cpp"
+#include "IOHelper.h"
 
 int main(int argc, char* argv[]) {
+	IOHelper helper = IOHelper();
 	double** data = new double*[2];
 	for (int i = 0; i < 2; i++) {
 		data[i] = new double[2];
@@ -11,6 +13,6 @@ int main(int argc, char* argv[]) {
 		}
 	}
 	Matrix A(data, 2, 2);
-	A.print();
+	helper.print(A);
 	return 0;
 }

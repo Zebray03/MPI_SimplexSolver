@@ -1,6 +1,6 @@
 #pragma once
-#include <iostream>
 #include "MatrixException.h"
+#include <vector>
 
 class Matrix
 {
@@ -26,6 +26,10 @@ public:
 				this->data[i][j] = data[i][j];
 			}
 		}
+	}
+	Matrix(std::vector<std::vector<char>> data)
+	{
+		//todo
 	}
 
 	~Matrix()
@@ -64,7 +68,7 @@ public:
 	/**
 	* @brief		Transpose the matrix
 	*
-	* @return		*this
+	* @return		Matrix
 	*/
 	Matrix trans()
 	{
@@ -168,20 +172,6 @@ public:
 		}
 	}
 
-	/**
-	* @brief	Print the matrix
-	*/
-	void print()
-	{
-		for (int i = 0; i < row; i++)
-		{
-			for (int j = 0; j < column; j++)
-			{
-				std::cout << data[i][j] << (j != column - 1 ? ' ' : '\n') << std::endl;
-			}
-		}
-	}
-
 private:
 	int row;
 	int column;
@@ -197,16 +187,5 @@ private:
 	double** get_data()
 	{
 		return this->data;
-	}
-	bool double_check()
-	{
-		if (this->row == 1 && this->column == 1)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
 	}
 };

@@ -32,6 +32,9 @@
     <ClCompile Include="MPI_Simplex.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="MPI_Matrix.h">
+      <Filter>头文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Matrix.h">

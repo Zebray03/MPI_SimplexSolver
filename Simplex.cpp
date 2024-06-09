@@ -54,7 +54,6 @@ public:
 		int* bases_index = new int[base_num];
 		for (int i = 0; i < base_num; i++)
 		{
-			// may have problems
 			if ((*tabular)[i][i] == 0)
 			{
 				for (int j = 0; j < base_num; j++)
@@ -82,13 +81,9 @@ public:
 				tabular->row_unitization(i, bases_index[i]);
 				for (int j = 0; j < base_num; j++)
 				{
-					if (i == j)
+					if (j != i)
 					{
-						continue;
-					}
-					else
-					{
-						tabular->column_elimination(i, bases_index[i]);
+						tabular->primary_row_transform_3(j, i, -(*tabular)[j][bases_index[i]]);
 					}
 				}
 			}

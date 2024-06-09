@@ -2,10 +2,10 @@
 #include "Vector.h"
 #include "IOHelper.h"
 
-class Simplex
+class SimplexSolver
 {
 public:
-	Simplex(Matrix& A, Vector& b, Vector& c)
+	SimplexSolver(Matrix& A, Vector& b, Vector& c)
 	{
 		int* A_size = A.get_size();
 		int b_size = b.get_size();
@@ -39,7 +39,7 @@ public:
 		}
 	}
 
-	~Simplex() {}
+	~SimplexSolver() {}
 
 	/**
 	* @brief	Solve the simplex

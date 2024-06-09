@@ -2,10 +2,10 @@
 #include "Vector.h"
 #include <mpi.h>
 
-class MPI_Simplex
+class MPI_SimplexSolver
 {
 public:
-	MPI_Simplex(Matrix& A, Vector& b, Vector& c)
+	MPI_SimplexSolver(Matrix& A, Vector& b, Vector& c)
 	{
 		int* A_size = A.get_size();
 		int b_size = b.get_size();
@@ -39,7 +39,7 @@ public:
 		}
 	}
 
-	~MPI_Simplex(){}
+	~MPI_SimplexSolver(){}
 
 	/**
 	* @brief	Solve the simplex using the MPI interface

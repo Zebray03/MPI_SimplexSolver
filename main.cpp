@@ -1,6 +1,5 @@
 #include "Matrix.h"
-#include "Simplex.cpp"
-#include "MPI_Simplex.cpp"
+#include "MPI_SimplexSolver.cpp"
 #include "IOHelper.h"
 #include <chrono>
 
@@ -42,7 +41,7 @@ int main(int argc, char* argv[]) {
 	cost[4] = 0;
 	Vector c(cost, 5);
 
-	MPI_Simplex mpi_smp(A, b, c);
+	MPI_SimplexSolver mpi_smp(A, b, c);
 
 	auto start = std::chrono::system_clock::now();
 	Vector mpi_solution = mpi_smp.MPI_solve(argc, argv);

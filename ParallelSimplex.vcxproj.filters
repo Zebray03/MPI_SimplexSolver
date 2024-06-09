@@ -29,7 +29,7 @@
     <ClCompile Include="IOHelper.h">
       <Filter>头文件</Filter>
     </ClCompile>
-    <ClCompile Include="MPI_Simplex.cpp">
+    <ClCompile Include="MPI_SimplexSolver.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="MPI_Matrix.h">
@@ -40,7 +40,7 @@
     <ClInclude Include="Matrix.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Simplex.cpp">
+    <ClInclude Include="SimplexSolver.cpp">
       <Filter>源文件</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">

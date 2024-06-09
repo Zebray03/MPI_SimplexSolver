@@ -24,6 +24,7 @@
     <ProjectGuid>{3e47ff21-e96e-42da-aa6e-8d971e6cf4ea}</ProjectGuid>
     <RootNamespace>ParallelSimplex</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>MPI_SimplexSolver</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -140,12 +141,12 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MatrixException.h" />
     <ClCompile Include="MPI_Matrix.h" />
-    <ClCompile Include="MPI_Simplex.cpp" />
+    <ClCompile Include="MPI_SimplexSolver.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="Simplex.cpp" />
+    <ClInclude Include="SimplexSolver.cpp" />
     <ClInclude Include="Vector.h" />
   </ItemGroup>
   <ItemGroup>

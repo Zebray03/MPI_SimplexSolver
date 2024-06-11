@@ -1,6 +1,7 @@
 #pragma once
 #include "MatrixException.h"
 #include <vector>
+#include <mpi.h>
 
 class MPI_Matrix
 {

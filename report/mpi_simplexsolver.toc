@@ -1,0 +1,6 @@
+\beamer@sectionintoc {1}{单纯形法}{3}{0}{1}
+\beamer@subsectionintoc {1}{1}{线性规划标准型}{3}{0}{1}
+\beamer@subsectionintoc {1}{2}{单纯形法执行步骤}{7}{0}{1}
+\beamer@sectionintoc {2}{并行化及其代码实现}{9}{0}{2}
+\beamer@subsectionintoc {2}{1}{并行单纯形表迭代}{9}{0}{2}
+\beamer@subsectionintoc {2}{2}{类的设计及代码框架}{11}{0}{2}

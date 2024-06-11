@@ -155,6 +155,7 @@ public:
 	* @param column_index   The index of the eliminator in the row
 	*
 	* @return				void
+	* @deprecated
 	*/
 	void column_elimination(int row_index, int column_index)
 	{
@@ -169,18 +170,6 @@ public:
 				this->primary_row_transform_3(i,row_index,data[i][column_index]);
 			}
 		}
-	}
-
-	/**
-	* @brief				Eliminate column j using row i (here Matrix[i,j] = 1) using MPI interface
-	* @param row_index		The index of the eliminator row
-	* @param column_index   The index of the eliminator in the row
-	*
-	* @return				void
-	*/
-	Matrix& MPI_column_elimination(int row_index, int column_index)
-	{
-		
 	}
 
 private:

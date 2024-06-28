@@ -13,6 +13,27 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="源文件\test">
+      <UniqueIdentifier>{8bd65664-54a0-43a7-a52d-68de0f9aa175}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\test\test1">
+      <UniqueIdentifier>{286bd264-c379-4a07-90f6-ad31a63c048c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\test\test1\data">
+      <UniqueIdentifier>{16a30700-b533-403e-b45b-62f676b7dc94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\test\test2">
+      <UniqueIdentifier>{624a2411-a040-4db0-ba50-bb61f33ec339}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\test\test2\data">
+      <UniqueIdentifier>{bddafb9d-f623-443c-9fe2-2404464f1f59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\test\test3">
+      <UniqueIdentifier>{a9c64ba1-6681-44d9-9fff-f6b9ab8e568a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\test\test3\data">
+      <UniqueIdentifier>{f0aed67f-5823-46c0-89f4-f1a735a6f011}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Visual Studio 2022.lnk">
@@ -20,42 +41,81 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="test\test1\mpi_simplex_dir_search_test1.cpp">
+      <Filter>源文件\test\test1</Filter>
+    </ClCompile>
+    <ClCompile Include="test\test1\mpi_simplex_par_trans_test1.cpp">
+      <Filter>源文件\test\test1</Filter>
+    </ClCompile>
+    <ClCompile Include="test\iotest.cpp">
+      <Filter>源文件\test</Filter>
+    </ClCompile>
+    <ClCompile Include="src\main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="MatrixException.h">
-      <Filter>头文件</Filter>
-    </ClCompile>
-    <ClCompile Include="IOHelper.h">
-      <Filter>头文件</Filter>
-    </ClCompile>
-    <ClCompile Include="MPI_SimplexSolver.cpp">
+    <ClCompile Include="src\MPI_SimplexSolver.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="MPI_Matrix.h">
-      <Filter>头文件</Filter>
+    <ClCompile Include="src\SimplexSolver.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="test\test2\mpi_simplex_dir_search_test2.cpp">
+      <Filter>源文件\test\test2</Filter>
+    </ClCompile>
+    <ClCompile Include="test\test2\mpi_simplex_par_trans_test2.cpp">
+      <Filter>源文件\test\test2</Filter>
+    </ClCompile>
+    <ClCompile Include="test\test3\mpi_simplex_dir_search_test3.cpp">
+      <Filter>源文件\test\test3</Filter>
+    </ClCompile>
+    <ClCompile Include="test\test3\mpi_simplex_par_trans_test3.cpp">
+      <Filter>源文件\test\test3</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Matrix.h">
+    <ClInclude Include="include\IOHelper.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="SimplexSolver.cpp">
-      <Filter>源文件</Filter>
-    </ClInclude>
-    <ClInclude Include="resource.h">
+    <ClInclude Include="include\Matrix.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Vector.h">
+    <ClInclude Include="include\MatrixException.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\resource.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Vector.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="test\test1\1_A.txt">
-      <Filter>资源文件</Filter>
+    <Text Include="test\test1\data\A.txt">
+      <Filter>源文件\test\test1\data</Filter>
     </Text>
-    <Text Include="test\test1\1_b.txt">
-      <Filter>资源文件</Filter>
+    <Text Include="test\test1\data\b.txt">
+      <Filter>源文件\test\test1\data</Filter>
+    </Text>
+    <Text Include="test\test1\data\c.txt">
+      <Filter>源文件\test\test1\data</Filter>
+    </Text>
+    <Text Include="test\test2\data\A.txt">
+      <Filter>源文件\test\test2\data</Filter>
+    </Text>
+    <Text Include="test\test2\data\b.txt">
+      <Filter>源文件\test\test2\data</Filter>
+    </Text>
+    <Text Include="test\test2\data\c.txt">
+      <Filter>源文件\test\test2\data</Filter>
+    </Text>
+    <Text Include="test\test3\data\A.txt">
+      <Filter>源文件\test\test3\data</Filter>
+    </Text>
+    <Text Include="test\test3\data\b.txt">
+      <Filter>源文件\test\test3\data</Filter>
+    </Text>
+    <Text Include="test\test3\data\c.txt">
+      <Filter>源文件\test\test3\data</Filter>
     </Text>
   </ItemGroup>
 </Project>

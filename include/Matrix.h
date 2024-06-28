@@ -1,14 +1,13 @@
 #pragma once
 #include "MatrixException.h"
 #include <vector>
-#include <mpi.h>
 
-class MPI_Matrix
+class Matrix
 {
 public:
-	MPI_Matrix() :row(0), column(0), data(nullptr) {}
+	Matrix() :row(0), column(0), data(nullptr) {}
 
-	MPI_Matrix(int m_row, int m_column) :row(m_row), column(m_column)
+	Matrix(int m_row, int m_column) :row(m_row), column(m_column)
 	{
 		data = new double* [row];
 		for (int i = 0; i < row; i++)
@@ -16,7 +15,7 @@ public:
 			data[i] = new double[column]();
 		}
 	}
-	MPI_Matrix(double** data, int m_row, int m_column) :row(m_row), column(m_column)
+	Matrix(double** data, int m_row, int m_column) :row(m_row), column(m_column)
 	{
 		this->data = new double* [row];
 		for (int i = 0; i < row; i++)
@@ -28,12 +27,22 @@ public:
 			}
 		}
 	}
-	MPI_Matrix(std::vector<std::vector<char>> data)
+	Matrix(std::vector<std::vector<double>> data)
 	{
-		//todo
+		int row = data.size();
+		int column = data[1].size();
+		this->data = new double* [row];
+		for (int i = 0; i < row; i++)
+		{
+			this->data[i] = new double[column]();
+			for (int j = 0; j < column; j++)
+			{
+				this->data[i][j] = data[i][j];
+			}
+		}
 	}
 
-	~MPI_Matrix()
+	~Matrix()
 	{
 		delete[] data;
 	}
@@ -47,7 +56,7 @@ public:
 	/**
 	* @brief		Override the operator =
 	*/
-	MPI_Matrix& operator=(MPI_Matrix& para)
+	Matrix& operator=(Matrix& para)
 	{
 		for (int i = 0; i < this->row; i++)
 		{
@@ -65,6 +74,45 @@ public:
 	double* operator[](int index)
 	{
 		return this->get_data()[index];
+	}
+
+	/**
+	* @brief		Transpose the matrix
+	*
+	* @return		Matrix
+	*/
+	Matrix trans()
+	{
+		int row = this->get_column();
+		int column = this->get_row();
+		Matrix result = Matrix(row, column);
+		for (int i = 0; i < row; i++)
+		{
+			for (int j = 0; j < column; j++)
+			{
+				result[i][j] = *this[j][i];
+			}
+		}
+		return result;
+	}
+
+	/**
+	* @brief			Exchange the matrix's row i and j
+	* @param index1		The index of the first row
+	* @param index2		The index of the second row
+	*
+	* @return			void
+	*/
+	Matrix& primary_row_transform_1(int index1, int index2)
+	{
+		double* temp = new double[this->column];
+		for (int i = 0; i < this->column; i++)
+		{
+			temp[i] = this->data[index2][i];
+			this->data[index2][i] = this->data[index1][i];
+			this->data[index1][i] = temp[i];
+		}
+		return *this;
 	}
 
 	/**
@@ -123,23 +171,15 @@ public:
 	{
 		for (int i = 0; i < this->row; i++)
 		{
-			if (i != row_index)
+			if (i == row_index)
 			{
-				this->primary_row_transform_3(i, row_index, data[i][column_index]);
+				continue;
+			}
+			else
+			{
+				this->primary_row_transform_3(i,row_index,data[i][column_index]);
 			}
 		}
-	}
-
-	/**
-	* @brief				Eliminate column j using row i (here Matrix[i,j] = 1) using MPI interface
-	* @param row_index		The index of the eliminator row
-	* @param column_index   The index of the eliminator in the row
-	*
-	* @return				void
-	*/
-	void MPI_column_elimination(int row_index, int column_index)
-	{
-
 	}
 
 private:

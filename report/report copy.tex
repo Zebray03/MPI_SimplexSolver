@@ -1,0 +1,155 @@
+\documentclass[UTF8,a4paper,10pt]{ctexart}
+\usepackage[left=2.00cm, right=2.00cm, top=3.50cm, bottom=3.50cm]{geometry} %页边距
+\CTEXsetup[format={\Large\bfseries}]{section} %设置章标题居左
+ 
+ 
+%%%%%%%%%%%%%%%%%%%%%%%
+% -- text font --
+% compile using Xelatex
+%%%%%%%%%%%%%%%%%%%%%%%
+% -- 中文字体 --
+%\setmainfont{Microsoft YaHei}  % 微软雅黑
+%\setmainfont{YouYuan}  % 幼圆    
+%\setmainfont{NSimSun}  % 新宋体
+%\setmainfont{KaiTi}    % 楷体
+%\setmainfont{SimSun}   % 宋体
+%\setmainfont{SimHei}   % 黑体
+% -- 英文字体 --
+%\usepackage{times}
+%\usepackage{mathpazo}
+%\usepackage{fourier}
+%\usepackage{charter}
+\usepackage{helvet}
+\usepackage{amsmath, amsfonts, amssymb} % math equations, symbols
+\usepackage[english]{babel}
+\usepackage{color}      % color content
+\usepackage{graphicx}   % import figures
+\usepackage{subfig}
+\usepackage{url}        % hyperlinks
+\usepackage{bm}         % bold type for equations
+\usepackage{multirow}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{epstopdf}
+\usepackage{epsfig}
+\usepackage{algorithm}
+\usepackage{algorithmic} 
+\usepackage{listings} 
+\usepackage{xcolor}
+\lstset{
+    language=matlab,  %代码语言使用的是matlab
+    frame=shadowbox, %把代码用带有阴影的框圈起来
+    rulesepcolor=\color{red!20!green!20!blue!20},%代码块边框为淡青色
+    keywordstyle=\color{blue!90}\bfseries, %代码关键字的颜色为蓝色，粗体
+    commentstyle=\color{red!10!green!70}\textit,    % 设置代码注释的颜色
+    showstringspaces=false,%不显示代码字符串中间的空格标记
+    numbers=left, % 显示行号
+    numberstyle=\tiny,    % 行号字体
+    stringstyle=\ttfamily, % 代码字符串的特殊格式
+    breaklines=true, %对过长的代码自动换行
+    extendedchars=false,  %解决代码跨页时，章节标题，页眉等汉字不显示的问题
+%   escapebegin=\begin{CJK*},escapeend=\end{CJK*},      
+% 代码中出现中文必须加上，否则报错
+    texcl=true}
+\renewcommand{\algorithmicrequire}{ \textbf{Input:}}     % use Input in the format of Algorithm  
+\renewcommand{\algorithmicensure}{ \textbf{Initialize:}} % use Initialize in the format of Algorithm  
+\renewcommand{\algorithmicreturn}{ \textbf{Output:}}     % use Output in the format of Algorithm   
+
+% -------------------------允许算法跨页-------------
+\makeatletter
+\newenvironment{breakablealgorithm}
+    {% \begin{breakablealgorithm}
+    \begin{center}
+        \refstepcounter{algorithm}% New algorithm
+        \hrule height.8pt depth0pt \kern2pt% \@fs@pre for \@fs@ruled
+        \renewcommand{\caption}[2][\relax]{% Make a new \caption
+            {\raggedright\textbf{\ALG@name~\thealgorithm} ##2\par}%
+                \ifx\relax##1\relax % #1 is \relax
+                    \addcontentsline{loa}{algorithm}{\protect\numberline{\thealgorithm}##2}%
+                \else % #1 is not \relax
+                    \addcontentsline{loa}{algorithm}{\protect\numberline{\thealgorithm}##1}%
+                \fi
+            \kern2pt\hrule\kern2pt
+        }
+  }{% \end{breakablealgorithm}
+            \kern2pt\hrule\relax% \@fs@post for \@fs@ruled
+        \end{center}
+  }
+\makeatother
+ 
+\usepackage{fancyhdr} %设置页眉、页脚
+%\pagestyle{fancy}
+\lhead{}
+\chead{}
+%\rhead{\includegraphics[width=1.2cm]{fig/ZJU_BLUE.eps}}
+\lfoot{}
+\cfoot{}
+\rfoot{}
+%\pagestyle{empty} %删除所有页码
+ 
+%%%%%%%%%%%%%%%%%%%%%%%
+%  设置水印
+%%%%%%%%%%%%%%%%%%%%%%%
+%\usepackage{draftwatermark}         % 所有页加水印
+%\usepackage[firstpage]{draftwatermark} % 只有第一页加水印
+% \SetWatermarkText{Water-Mark}           % 设置水印内容
+% \SetWatermarkText{\includegraphics{fig/ZJDX-WaterMark.eps}}         % 设置水印logo
+% \SetWatermarkLightness{0.9}             % 设置水印透明度 0-1
+% \SetWatermarkScale{1}                   % 设置水印大小 0-1    
+ 
+\usepackage{hyperref} %bookmarks
+\hypersetup{colorlinks, bookmarks, unicode} %unicode
+ 
+
+\title{\textbf{并行单纯形法}}
+\author{ 211840196 张博阳 }
+\date{}
+
+\begin{document}
+\maketitle
+\section{单纯形法}
+\renewcommand{\thealgorithm}{1}
+\begin{breakablealgorithm}
+    \caption{单纯形法}
+    \begin{algorithmic}[1]
+        \REQUIRE $n$阶系数矩阵$A=[\alpha_1^{(0)},\alpha_2^{(0)},\dots,\alpha_n^{(0)}]^{\rm T}=(a_{ij})_n$，右端向量$b=[b_1,b_2,\dots,b_n]^{\rm T}$
+        \FOR {$i=1,\dots,n$}
+        \STATE $p\leftarrow\arg \max_{1 \le p \le n} \left| a_{pi}\right|$ \\
+        \STATE $\alpha_p^{(i-1)}$与$\alpha_i^{(i-1)}$交换 \\
+        \FOR {$j=i+1,\dots,n$}
+        \FOR {$k=i,\dots,n$}
+        \STATE $a_{jk}\leftarrow a_{jk}-\dfrac{a_{ii}}{a_{ji}}a_{ik}$ \\
+        \ENDFOR
+        \STATE $b_j \leftarrow b_j-\dfrac{a_{ii}}{a_{ji}}b_i$ \\
+        \ENDFOR
+        \ENDFOR
+        \FOR {$i=n,n-1,\dots,1$}
+        \STATE $x_i \leftarrow \dfrac{b_i-\sum_{j=i+1}^{n}a_{ij}x_j}{a_{ii}}$ \\
+        \ENDFOR
+        \RETURN 线性方程组$Ax=b$的解向量$x=[x_1,x_2,\dots,x_n]^{\rm T}$
+    \end{algorithmic}
+\end{breakablealgorithm}
+\section{实现思路}
+Richard Marciano, Teodor Rus在1988年就提出利用并行手段加快换基结束后迭代单纯形表的计算速度$^{[1]}$. 在2017年,  Péter Tar等提出了利用密集计算等方法对单纯形法进行并行加速, 其中对于凸多面体的顶点寻优问题, 从多个初始位置开始进行单纯形表迭代可以实现加速及更好的鲁棒性表现$^{[1]}$. 本项目从这两个方向分别进行单纯形法的并行化实现. 由于计算资源的有限, 仅对两种方法分别进行实现, 而无对进程分组的两种方法结合实现并行.
+\section{代码框架及并行化手段}
+项目类图如下.
+\begin{figure*}[ht]
+    \centering
+    \includegraphics[width=14cm,height=7cm]{MPI\_SimplexSolver.drawio.png}
+\end{figure*}
+SimplexSolver类为单线程下的单纯形法求解器类, 其中依赖Matrix和Vector两个工具类. 在SimplexSolver基础上扩展为MPI\_SimplexSolver, 其使用MPI接口对核心函数solve()实现并行. IOHelper为项目进行I/O操作的辅助类.
+\par
+Matrix类封装了二维数组和初等行变换等单纯形法需要的矩阵行为.
+\begin{figure*}[ht]
+    \centering
+    \includegraphics[width=14cm,height=7cm]{MPI\_SimplexSolver.drawio.png}
+\end{figure*}
+
+\section{数值表现}
+
+\begin{thebibliography}{5}
+    \bibitem{ref1}Richard Marciano, Teodor Rus, Parallel Implementations of the Simplex Algorithm, Proceedings., 2nd Symposium on the Frontiers of Massively Parallel Computation, 10-12, October 1988.
+    \bibitem{ref2}Péter Tar, Bálint Stágel, István Maros, Parallel search paths for the simplex algorithm, Central European Journal of Operations Research, (2017) 25:967–984.
+\end{thebibliography}
+
+\end{document}

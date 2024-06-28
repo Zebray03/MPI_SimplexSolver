@@ -1,6 +1,7 @@
 #pragma once
-#include "Vector.h"
-#include "IOHelper.h"
+#include "../include/Matrix.h"
+#include "../include/Vector.h"
+#include "../include/IOHelper.h"
 
 class SimplexSolver
 {
@@ -49,6 +50,8 @@ public:
 		// Get the number of the bases and variables
 		int base_num = this->tabular->get_size()[0];
 		int var_num = this->tabular->get_size()[1] - 1;
+		bool not_completed = true;
+		bool is_bounded;
 
 		// Initial the indexes of the bases
 		int* bases_index = new int[base_num];
@@ -69,8 +72,6 @@ public:
 
 		// Allocate the reduced costs
 		double* reduced_cost = new double[var_num];
-		bool not_completed = true;
-		bool is_bounded;
 
 		// Execute the loop of solving
 		do

@@ -137,21 +137,43 @@
     <None Include="..\Visual Studio 2022.lnk" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="IOHelper.h" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="MatrixException.h" />
-    <ClCompile Include="MPI_Matrix.h" />
-    <ClCompile Include="MPI_SimplexSolver.cpp" />
+    <ClCompile Include="src\main.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\MPI_SimplexSolver.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\SimplexSolver.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="test\iotest.cpp" />
+    <ClCompile Include="test\test1\mpi_simplex_dir_search_test1.cpp" />
+    <ClCompile Include="test\test1\mpi_simplex_par_trans_test1.cpp" />
+    <ClCompile Include="test\test2\mpi_simplex_dir_search_test2.cpp" />
+    <ClCompile Include="test\test2\mpi_simplex_par_trans_test2.cpp" />
+    <ClCompile Include="test\test3\mpi_simplex_dir_search_test3.cpp" />
+    <ClCompile Include="test\test3\mpi_simplex_par_trans_test3.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Matrix.h" />
-    <ClInclude Include="resource.h" />
-    <ClInclude Include="SimplexSolver.cpp" />
-    <ClInclude Include="Vector.h" />
+    <ClInclude Include="include\IOHelper.h" />
+    <ClInclude Include="include\Matrix.h" />
+    <ClInclude Include="include\MatrixException.h" />
+    <ClInclude Include="include\resource.h" />
+    <ClInclude Include="include\Vector.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="test\test1\1_A.txt" />
-    <Text Include="test\test1\1_b.txt" />
+    <Text Include="test\test1\data\A.txt" />
+    <Text Include="test\test1\data\b.txt" />
+    <Text Include="test\test1\data\c.txt" />
+    <Text Include="test\test2\data\A.txt" />
+    <Text Include="test\test2\data\b.txt" />
+    <Text Include="test\test2\data\c.txt" />
+    <Text Include="test\test3\data\A.txt" />
+    <Text Include="test\test3\data\b.txt" />
+    <Text Include="test\test3\data\c.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

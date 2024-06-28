@@ -15,6 +15,15 @@ public:
 			this->data[i] = data[i];
 		}
 	}
+	Vector(std::vector<double> data) :column(1)
+	{
+		int row = data.size();
+		this->data = new double [row];
+		for (int i = 0; i < row; i++)
+		{
+			this->data[i] = data[i];
+		}
+	}
 
 	~Vector()
 	{
